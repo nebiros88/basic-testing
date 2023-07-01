@@ -18,33 +18,19 @@ describe('resolveValue', () => {
 describe('throwError', () => {
   test('should throw error with provided message', () => {
     const msg = 'mockedMsg';
-    expect.assertions(1);
-    try {
-      throwError(msg);
-    } catch (error: any) {
-      expect(error.message).toBe(msg);
-    }
+    expect(() => throwError(msg)).toThrow(msg);
   });
 
   test('should throw error with default message if message is not provided', () => {
     const defaultMsg = 'Oops!';
-    expect.assertions(1);
-    try {
-      throwError();
-    } catch (error: any) {
-      expect(error.message).toBe(defaultMsg);
-    }
+    expect(() => throwError()).toThrow(defaultMsg);
   });
 });
 
 describe('throwCustomError', () => {
   test('should throw custom error', () => {
-    expect.assertions(1);
-    try {
-      throwCustomError();
-    } catch (error) {
-      expect(error).toBeInstanceOf(MyAwesomeError);
-    }
+    const error = new MyAwesomeError();
+    expect(() => throwCustomError()).toThrow(error);
   });
 });
 
@@ -52,10 +38,8 @@ describe('rejectCustomError', () => {
   test('should reject custom error', async () => {
     const customError = new MyAwesomeError();
     expect.assertions(1);
-    try {
-      await rejectCustomError();
-    } catch (error) {
-      expect(error).toEqual(customError);
-    }
+    await rejectCustomError().catch((error) =>
+      expect(error).toEqual(customError),
+    );
   });
 });
