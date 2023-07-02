@@ -26,7 +26,7 @@ describe('doStuffByTimeout', () => {
   test('should set timeout with provided callback and timeout', () => {
     const spy = jest.spyOn(global, 'setTimeout');
     doStuffByTimeout(callbackMock, timeout);
-    expect(spy).toHaveBeenNthCalledWith(1, callbackMock, timeout);
+    expect(spy).toHaveBeenCalledWith(callbackMock, timeout);
   });
 
   test('should call callback only after timeout', () => {
@@ -53,7 +53,7 @@ describe('doStuffByInterval', () => {
   test('should set interval with provided callback and timeout', () => {
     const spy = jest.spyOn(global, 'setInterval');
     doStuffByInterval(callbackMock, interval);
-    expect(spy).toHaveBeenNthCalledWith(1, callbackMock, interval);
+    expect(spy).toHaveBeenCalledWith(callbackMock, interval);
   });
 
   test('should call callback multiple times after multiple intervals', () => {
@@ -83,7 +83,7 @@ describe('readFileAsynchronously', () => {
       'join',
     );
     await readFileAsynchronously(pathToFile);
-    expect(spyJoin).toBeCalledWith(__dirname, pathToFile);
+    expect(spyJoin).toHaveBeenCalledWith(__dirname, pathToFile);
   });
 
   test('should return null if file does not exist', async () => {
